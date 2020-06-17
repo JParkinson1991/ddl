@@ -1,0 +1,19 @@
+{
+    "name": "jparkinson1991/ddl",
+    "description": "Dockered Drupal LEMP Stack",
+    "version": "1.0.0",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Josh Parkinson",
+            "email": "joshparkinson1991@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+    },
+    "require-dev": {
+    }
+}

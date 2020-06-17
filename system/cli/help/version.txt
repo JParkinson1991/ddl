@@ -1,0 +1,8 @@
+Command:
+    ddl version
+
+Description:
+    Shows the project version number
+
+Usage:
+    ddl version

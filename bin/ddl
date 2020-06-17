@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# Store the application root
+# Do this prior to imports as they may effect the working directory path
+APP_ROOT="$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && cd .. && pwd)"
+
+# Import all required of the required helpers/functions
+#
+# Do this during bootstrap so that each helper/function file does not have to
+# manually maintain relationships with its dependents, ie, no need to manually
+# import in each of the helper/function files. Note to developers, if using
+# files outside the context of this entry point, manually ensure file
+# dependencies are met.
+importDirs=("$APP_ROOT/system/cli/util" "$APP_ROOT/system/cli/functions");
+for importDir in ${importDirs[@]}
+do
+    for file in $(find $importDir -name "*.sh");
+    do
+        source $file;
+    done
+done
+
+# Show help screens as required
+#
+# The following command formats will be caught here and trigger the
+# display of the help screens:
+#     ddl                     - empty command, defaults to help
+#     ddl help [command]      - explicit use of the help command
+#     ddl [command] --help    - using the --help flag
+#     ddl [command] -h        - using the -h flag
+if [[ $# == 0 ]] || string_contains "$*" --help || string_contains "$*" -h || [[ $1 == "help" ]]; then
+    # If using the explicit help command
+    if [[ $1 == "help" ]]; then
+        helpFirst=0 # set flag for edge cases ie help -h | help --h
+        shift 1
+    fi
+
+    # If using empty command, or explicit help command with no command provided
+    if [[ $# -eq 0 ]]; then
+        show_help
+        exit $?
+    fi
+
+    # If only help flags left in the command string
+    # Either ddl -h|--help or ddl help -h|--help
+    if [[ "$*" == "-h" ]] || [[ "$*" == "--help" ]]; then
+        # If help first not set, else show help's help screen
+        if [[ -z ${helpFirst+x} ]]; then
+            show_help
+        else
+             show_help "help"
+        fi
+
+        exit $?;
+    fi
+
+    # Help triggered with a command to show help for
+    # Cleanup command string
+    # Remove --help, remove -h, trim
+    # Leaving only the command to show help for
+    helpArgs=${*//--help}
+    helpArgs=${helpArgs//-h}
+    helpArgs=$(echo $helpArgs | sed 's|^ *||g; s| *$||g;');
+
+    # Show help for that string exit with show_help return code
+    show_help "$helpArgs"
+    exit $?
+fi
+
+# Not viewing help, check for shorthand version call
+if [[ "$*" == "--version" ]] || [[ "$*" == "-v" ]]; then
+    show_version
+    exit 0
+fi
+
+# Standard command determined, run it
+run_command "$@"
+exit $?
