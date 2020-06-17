@@ -1,0 +1,12 @@
+Command:
+    ddl help
+
+Description:
+    Shows a help screen
+
+Usage:
+    ddl help [command]
+
+Arguments:
+    [command]
+        Optional, the command to view the help screen for

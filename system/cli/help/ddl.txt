@@ -1,0 +1,18 @@
+
+DDDDD   DDDDD   LL
+DD  DD  DD  DD  LL
+DD   DD DD   DD LL
+DD   DD DD   DD LL
+DDDDDD  DDDDDD  LLLLLLL
+
+Dockered Drupal LEMP
+
+Usage:
+    ddl <command> [options] [arguments]
+
+Available Commands:
+    version ................................. Show the package version
+
+Global options:
+    -h | --help ............................. Show the screen for the given context
+    -v | --version .......................... Show the package version
