@@ -11,6 +11,7 @@ Usage:
     ddl <command> [options] [arguments]
 
 Available Commands:
+    build ................................... Builds the environment's Docker images
     version ................................. Show the package version
 
 Global options:

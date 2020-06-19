@@ -8,8 +8,8 @@
 # Returns:
 # Int representations of true/false
 function string_contains() {
-    if [[ $# -lt 1 ]] || [[ $# -gt 2 ]]; then
-        error "Invalid arguments passed to get_json_value()"
+    if [[ $# -ne 2 ]]; then
+        error "Invalid arguments passed to string_contains()"
         exit 1
     fi
 

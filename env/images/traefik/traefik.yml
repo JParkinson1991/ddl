@@ -1,0 +1,10 @@
+api:
+    insecure: true
+
+providers:
+    providersThrottleDuration: 3
+    docker:
+        # docker-socket-proxy must match the name of the service as defined in docker-compose.yml
+        endpoint: "tcp://docker-socket-proxy:2375"
+        exposedByDefault: false
+        watch: true

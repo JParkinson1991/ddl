@@ -1,0 +1,26 @@
+Command:
+    ddl build
+
+Description:
+    Builds the environment's Docker images
+
+Usage:
+    ddl build [options] [service...]
+
+Arguments:
+    [service...]
+        The names of the services that are to be built. Space separated.
+        If services are provided by name only those will be built.
+        If no services provided all services will be built.
+        Service names can be pulled from docker-compose.yml
+        Additionally the 'compiler' service can be built.
+
+Options:
+    --compiler-tag <tag>
+        The tag to apply the compiler image
+        The tag 'ddl-compiler:latest' is always applied to the compiler image
+        Multiple compiler tags can be used by replication this option
+        Example: ddl build --compiler-tag tag1 --compiler-tag tag2 ...
+
+    All options for the standard 'docker-compose build' command can also be used
+    Reference: https://docs.docker.com/compose/reference/build/
