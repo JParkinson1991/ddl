@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+    docker-socket-proxy:
+        image: tecnativa/docker-socket-proxy
+        environment:
+            CONTAINERS: 1
+        networks:
+            - internal
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    traefik:
+        build:
+            context: .
+            dockerfile: ./env/images/traefik/Dockerfile
+        ports:
+            - 80:80
+            - 8080:8080
+        networks:
+            - public
+            - internal
+        restart: unless-stopped
+
+    nginx:
+        build:
+            context: .
+            dockerfile: ./env/images/nginx/Dockerfile
+        networks:
+            - internal
+        restart: unless-stopped
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.nginx.rule=Host(`${DOMAIN}`)
+
+    php:
+        build:
+            context: .
+            dockerfile: ./env/images/php/Dockerfile
+        networks:
+            - internal
+
+networks:
+    public: {}
+    internal: {}
