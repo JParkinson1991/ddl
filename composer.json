@@ -1,5 +1,5 @@
 {
-    "name": "jparkinson1991/ddl",
+    "name": "jparkinson1991/docker-drupal-lemp",
     "description": "Dockered Drupal LEMP Stack",
     "version": "1.0.0",
     "type": "project",
@@ -12,8 +12,71 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "system/packages/composer/docker-drupal-lemp-patches"
+        }
+    ],
     "require": {
+        "php": "^7.4.0",
+        "composer/installers": "^1.9",
+        "drupal-composer/drupal-paranoia": "^1.0",
+        "drupal-composer/drupal-scaffold": "^2.6",
+        "drupal/core": "^9.0",
+        "jparkinson1991/docker-drupal-lemp-patches": "^0.0.1"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "zaporylie/composer-drupal-optimizations": "^1.1"
+    },
+    "config": {
+        "discard-changes": true,
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "scripts": {
+        "post-drupal-scaffold-cmd": [
+            "cd app && patch < ../system/patches/drupal/scaffold/scaffold-autoload.patch",
+            "cd app && patch < ../system/patches/drupal/scaffold/scaffold-index.patch",
+            "cd app && patch < ../system/patches/drupal/scaffold/scaffold-update.patch",
+            "rm -f ./.gitattributes && mv app/.gitattributes ./.gitattributes",
+            "composer drupal:paranoia"
+        ]
+    },
+    "extra": {
+        "drupal-paranoia": {
+            "app-dir": "app",
+            "web-dir": "public"
+        },
+        "drupal-scaffold": {
+            "includes": [
+                "autoload.php",
+                "index.php",
+                "update.php",
+                ".gitattributes"
+            ],
+            "omit-defaults": true
+        },
+        "installer-paths": {
+            "app/core": [
+                "type:drupal-core"
+            ],
+            "app/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "app/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "app/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "app/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ]
+        }
     }
 }

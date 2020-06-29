@@ -1,0 +1,28 @@
+diff --git a/update.php b/update.php
+index 59e808ed..bbc0c263 100644
+--- a/update.php
++++ b/update.php
+@@ -1,5 +1,4 @@
+ <?php
+-
+ /**
+  * @file
+  * The PHP page that handles updating the Drupal installation.
+@@ -11,7 +10,7 @@
+ use Drupal\Core\Update\UpdateKernel;
+ use Symfony\Component\HttpFoundation\Request;
+ 
+-$autoloader = require_once 'autoload.php';
++$autoloader = require 'autoload.php';
+ 
+ // Disable garbage collection during test runs. Under certain circumstances the
+ // update path will create so many objects that garbage collection causes
+@@ -22,7 +21,7 @@ if (drupal_valid_test_ua()) {
+   gc_disable();
+ }
+ 
+-$kernel = new UpdateKernel('prod', $autoloader, FALSE);
++$kernel = new UpdateKernel(getenv('APP_ENV'), $autoloader, FALSE);
+ $request = Request::createFromGlobals();
+ 
+ $response = $kernel->handle($request);

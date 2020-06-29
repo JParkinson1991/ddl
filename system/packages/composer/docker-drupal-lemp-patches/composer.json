@@ -1,0 +1,32 @@
+{
+    "name": "jparkinson1991/docker-drupal-lemp-patches",
+    "description": "Internal patcher for jparkinson1991/docker-drupal-lemp",
+    "version": "0.0.1",
+    "type": "metapackage",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Josh Parkinson",
+            "email": "joshparkinson1991@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "netresearch/composer-patches-plugin": "~1.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "extra": {
+        "patches": {
+            "drupal/core": [
+                {
+                    "title": "Disable install.php outside of development",
+                    "url": "system/patches/drupal/core/install-only-dev.patch",
+                    "args": "-F 0"
+                }
+            ]
+        }
+    }
+}

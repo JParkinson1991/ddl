@@ -1,0 +1,10 @@
+diff --git a/autoload.php b/autoload.php
+index 50c2fcb1..78f34289 100644
+--- a/autoload.php
++++ b/autoload.php
+@@ -1,5 +1,4 @@
+ <?php
+-
+ /**
+  * @file
+  * Includes the autoloader created by Composer.
