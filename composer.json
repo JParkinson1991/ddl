@@ -24,11 +24,19 @@
         "drupal-composer/drupal-paranoia": "^1.0",
         "drupal-composer/drupal-scaffold": "^2.6",
         "drupal/core": "^9.0",
-        "jparkinson1991/docker-drupal-lemp-patches": "^0.0.1"
+        "jparkinson1991/docker-drupal-lemp-patches": "^0.0.1",
+        "vlucas/phpdotenv": "^5.0",
+        "webflo/drupal-finder": "^1.2"
     },
     "require-dev": {
+        "drupal/core-dev": "^9.0",
         "roave/security-advisories": "dev-master",
         "zaporylie/composer-drupal-optimizations": "^1.1"
+    },
+    "autoload": {
+        "files": [
+            "app/bootstrap.php"
+        ]
     },
     "config": {
         "discard-changes": true,
