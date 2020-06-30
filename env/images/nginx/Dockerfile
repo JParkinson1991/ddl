@@ -26,8 +26,13 @@ COPY --from=compiler /compiled/public /var/www/public
 
 # Todo: monitor this, ensure no breaking through usage
 # Todo: Look to move this into script that can be copied in pulling .env vars
-RUN /bin/bash -c \
-    "find /var/www/app/ -type f \( -iname \*.php -o -iname \*.module -o -iname \*.inc -o -iname \*.yml -o -iname \*.yaml \) -exec rm -rf {} \;"
+RUN find /var/www/app/ -type f \( \
+        -iname \*.php \
+        -o -iname \*.module \
+        -o -iname \*.inc \
+        -o -iname \*.yml \
+        -o -iname \*.yaml \
+    \) -exec rm -rf {} \;
 
 EXPOSE 80
 
