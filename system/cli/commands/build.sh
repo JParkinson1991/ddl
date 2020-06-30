@@ -9,7 +9,7 @@ fi
 # BUILD_COMPILER_TAGS
 #     An array of standard docker -t [tag] strings
 #     Array imploded on compiler build command as needed
-BUILD_COMPILER_TAGS=("-t ddl-compiler:latest")
+compilerImageTags=("-t ddl-compiler:latest")
 
 # Parse custom options from argument string
 standardArguments=()
@@ -18,7 +18,7 @@ do
     case "$1" in
         --compiler-tag)
             if [[ $2 != "ddl-compiler:latest" ]]; then
-                BUILD_COMPILER_TAGS+=("-t $2")
+                compilerImageTags+=("-t $2")
             fi
             shift # past --compiler-tag
             shift # past argument
@@ -45,6 +45,15 @@ exitCode=0
 # If building everything, or argument list contains the compiler service
 # Build the compiler
 if [[ "$buildAll" == true ]] || string_contains "$*" "compiler"; then
+    # If APP_ENV exists, create a build arg string
+    # if not, show warning, use default from compiler Dockerfile
+    if [[ -n "$APP_ENV" ]]; then
+        compilerBuildArg="--build-arg APP_ENV=$APP_ENV"
+    else
+        warning 'Failed to find $APP_ENV whilst building the compiler image. Defaulting to production.'
+        compilerBuildArg="--build-arg APP_ENV=prod"
+    fi
+
     # Remove compiler from the arguments
     for arg
     do
@@ -54,7 +63,7 @@ if [[ "$buildAll" == true ]] || string_contains "$*" "compiler"; then
         fi
     done
 
-    docker build ${BUILD_COMPILER_TAGS[*]} -f "$APP_ROOT/env/images/compiler/Dockerfile" "$APP_ROOT"
+    docker build $compilerBuildArg ${compilerImageTags[*]} -f "$APP_ROOT/env/images/compiler/Dockerfile" "$APP_ROOT"
 
     # Store exit code, if not successful exit
     exitCode=$?
