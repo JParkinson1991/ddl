@@ -22,11 +22,10 @@
         "php": "^7.4.0",
         "composer/installers": "^1.9",
         "drupal-composer/drupal-paranoia": "^1.0",
-        "drupal-composer/drupal-scaffold": "^2.6",
-        "drupal/core": "^9.0",
+        "drupal/core-composer-scaffold": "^9.0",
+        "drupal/core-recommended": "^9.0",
         "jparkinson1991/docker-drupal-lemp-patches": "^0.0.1",
-        "vlucas/phpdotenv": "^5.0",
-        "webflo/drupal-finder": "^1.2"
+        "vlucas/phpdotenv": "^5.0"
     },
     "require-dev": {
         "drupal/core-dev": "^9.0",
@@ -43,16 +42,15 @@
         "optimize-autoloader": true,
         "sort-packages": true,
         "platform": {
-            "php": "7.4"
+            "php": "7.4",
+            "ext-gd": "7.4"
         }
     },
     "scripts": {
         "post-drupal-scaffold-cmd": [
             "cd app && patch < ../system/patches/drupal/scaffold/scaffold-autoload.patch",
             "cd app && patch < ../system/patches/drupal/scaffold/scaffold-index.patch",
-            "cd app && patch < ../system/patches/drupal/scaffold/scaffold-update.patch",
-            "rm -f ./.gitattributes && mv app/.gitattributes ./.gitattributes",
-            "composer drupal:paranoia"
+            "cd app && patch < ../system/patches/drupal/scaffold/scaffold-update.patch"
         ]
     },
     "extra": {
@@ -61,13 +59,36 @@
             "web-dir": "public"
         },
         "drupal-scaffold": {
-            "includes": [
-                "autoload.php",
-                "index.php",
-                "update.php",
-                ".gitattributes"
+            "allowed-packages": [
+                "drupal/core"
             ],
-            "omit-defaults": true
+            "locations": {
+                "project-root": ".",
+                "web-root": "./app"
+            },
+            "gitignore": false,
+            "file-mapping": {
+                "[project-root]/.editorconfig": false,
+                "[web-root]/.csslintrc": false,
+                "[web-root]/.eslintignore": false,
+                "[web-root]/.eslintrc.json": false,
+                "[web-root]/.ht.router.php": false,
+                "[web-root]/.htaccess": false,
+                "[web-root]/example.gitignore": false,
+                "[web-root]/INSTALL.txt": false,
+                "[web-root]/README.txt": false,
+                "[web-root]/robots.txt": false,
+                "[web-root]/web.config": false,
+                "[web-root]/sites/README.txt": false,
+                "[web-root]/sites/development.services.yml": false,
+                "[web-root]/sites/example.settings.local.php": false,
+                "[web-root]/sites/example.sites.php": false,
+                "[web-root]/sites/default/default.services.yml": false,
+                "[web-root]/sites/default/default.settings.php": false,
+                "[web-root]/modules/README.txt": false,
+                "[web-root]/profiles/README.txt": false,
+                "[web-root]/themes/README.txt": false
+            }
         },
         "installer-paths": {
             "app/core": [
