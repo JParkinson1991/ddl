@@ -21,8 +21,13 @@ RUN chmod +x alpine_init.sh && /bin/sh alpine_init.sh && rm alpine_init.sh
 RUN chmod +x nginx_install.sh && /bin/bash nginx_install.sh && rm nginx_install.sh
 
 # App app directory to web root
-# todo php entry points, remove all but
-COPY --from=compiler /compiled/app /var/www
+COPY --from=compiler /compiled/app /var/www/app
+COPY --from=compiler /compiled/public /var/www/public
+
+# Todo: monitor this, ensure no breaking through usage
+# Todo: Look to move this into script that can be copied in pulling .env vars
+RUN /bin/bash -c \
+    "find /var/www/app/ -type f \( -iname \*.php -o -iname \*.module -o -iname \*.inc -o -iname \*.yml -o -iname \*.yaml \) -exec rm -rf {} \;"
 
 EXPOSE 80
 
