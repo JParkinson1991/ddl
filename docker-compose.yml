@@ -22,6 +22,8 @@ services:
             - public
             - internal
         restart: unless-stopped
+        depends_on:
+            - docker-socket-proxy
 
     nginx:
         build:
@@ -36,6 +38,9 @@ services:
         labels:
             - traefik.enable=true
             - traefik.http.routers.nginx.rule=Host(`${DOMAIN}`)
+        depends_on:
+          - traefik
+          - php
 
     php:
         build:
