@@ -13,7 +13,7 @@ index 59e808ed..bbc0c263 100644
  use Symfony\Component\HttpFoundation\Request;
 
 -$autoloader = require_once 'autoload.php';
-+$autoloader = require __DIR__'/autoload.php';
++$autoloader = require __DIR__.'/autoload.php';
 
  // Disable garbage collection during test runs. Under certain circumstances the
  // update path will create so many objects that garbage collection causes
