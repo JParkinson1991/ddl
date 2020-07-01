@@ -16,4 +16,3 @@ $dotEnv->safeLoad();
 
 // Validate environment variables
 $dotEnv->required('APP_ENV')->allowedValues(['dev', 'prod']);
-
