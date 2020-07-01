@@ -46,8 +46,6 @@ services:
         build:
             context: .
             dockerfile: ./env/images/php/Dockerfile
-        environment:
-            - APP_ENV=${APP_ENV}
         networks:
             - internal
 
