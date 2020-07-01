@@ -1,0 +1,16 @@
+Command:
+    ddl php:num-files
+
+Description:
+    Shows the current number of PHP files in the project
+
+Usage:
+    ddl php:num-files [search root]
+
+Arguments:
+    [search root]
+        The path to find all PHP files within.
+        If not provided this path is determined automatically and resolved from,
+        in the following order:
+            $APP_ENV - environment variable
+            $PWD     - the current working directory
