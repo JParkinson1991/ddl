@@ -12,5 +12,6 @@ Arguments:
         The path to find all PHP files within.
         If not provided this path is determined automatically and resolved from,
         in the following order:
-            $APP_ENV - environment variable
-            $PWD     - the current working directory
+            - An auto determined project root directory by the ddl binary
+            - The current working directory if the command was not run via
+              the ddl binary
