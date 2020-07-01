@@ -45,13 +45,9 @@ exitCode=0
 # If building everything, or argument list contains the compiler service
 # Build the compiler
 if [[ "$buildAll" == true ]] || string_contains "$*" "compiler"; then
-    # If APP_ENV exists, create a build arg string
-    # if not, show warning, use default from compiler Dockerfile
+    # If APP_ENV exists, create a build arg string, if not use default defined in compiler Dockerfile
     if [[ -n "$APP_ENV" ]]; then
         compilerBuildArg="--build-arg APP_ENV=$APP_ENV"
-    else
-        warning 'Failed to find $APP_ENV whilst building the compiler image. Defaulting to production.'
-        compilerBuildArg="--build-arg APP_ENV=prod"
     fi
 
     # Remove compiler from the arguments
