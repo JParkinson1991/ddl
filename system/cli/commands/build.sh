@@ -45,11 +45,6 @@ exitCode=0
 # If building everything, or argument list contains the compiler service
 # Build the compiler
 if [[ "$buildAll" == true ]] || string_contains "$*" "compiler"; then
-    # If APP_ENV exists, create a build arg string, if not use default defined in compiler Dockerfile
-    if [[ -n "$APP_ENV" ]]; then
-        compilerBuildArg="--build-arg APP_ENV=$APP_ENV"
-    fi
-
     # Remove compiler from the arguments
     for arg
     do
@@ -59,12 +54,34 @@ if [[ "$buildAll" == true ]] || string_contains "$*" "compiler"; then
         fi
     done
 
+    # If APP_ENV exists, create a build arg string, if not use default defined in compiler Dockerfile
+    if [[ -n "$APP_ENV" ]]; then
+        compilerBuildArg="--build-arg APP_ENV=$APP_ENV"
+    fi
+
     docker build $compilerBuildArg ${compilerImageTags[*]} -f "$APP_ROOT/env/images/compiler/Dockerfile" "$APP_ROOT"
 
     # Store exit code, if not successful exit
     exitCode=$?
     if [[ $exitCode -ne 0 ]]; then
         exit $exitCode
+    fi
+
+    # Successful compiler build, copy out its cache if APP_ROOT can be determined
+    # Only copy out cache if we know APP_ROOT to avoid addind directories to unknown locations within the host
+    if [[ -n "${APP_ROOT}" ]]; then
+        hostComposerCacheDir="${APP_ROOT}/var/cache/composer"
+
+        # Create the cache dir as needed
+        if [[ ! -d "$hostComposerCacheDir" ]]; then
+            mkdir -p "$hostComposerCacheDir"
+        fi
+
+        # Export the cache, create a temp container from the built image, copy out the cache, delete the container
+        notice "Exporting composer cache"
+        compilerTempId=$(docker create ddl-compiler:latest)
+        docker cp $compilerTempId:/tmp/cache/. "$hostComposerCacheDir"
+        docker rm -v $compilerTempId
     fi
 fi
 
