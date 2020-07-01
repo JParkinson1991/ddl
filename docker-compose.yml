@@ -29,9 +29,6 @@ services:
         build:
             context: .
             dockerfile: ./env/images/nginx/Dockerfile
-            args:
-                - BROTLI_COMMIT=${NGINX_BROTLI_COMMIT}
-                - NGINX_VERSION=${NGINX_VERSION}
         networks:
             - internal
         restart: unless-stopped
