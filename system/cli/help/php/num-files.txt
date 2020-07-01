@@ -2,7 +2,7 @@ Command:
     ddl php:num-files
 
 Description:
-    Shows the current number of PHP files in the project
+    Shows the current number of PHP files in the project. Useful when configuring Opcache for example.
 
 Usage:
     ddl php:num-files [search root]
