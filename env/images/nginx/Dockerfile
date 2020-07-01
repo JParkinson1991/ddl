@@ -1,7 +1,7 @@
 FROM ddl-compiler:latest as compiler
 FROM alpine:3.12
 
-ARG BROTLI_COMMIT="master"
+ARG NGINX_BROTLI_COMMIT="master"
 ARG NGINX_VERSION=1.18.0
 
 # Copy alpine initialiser

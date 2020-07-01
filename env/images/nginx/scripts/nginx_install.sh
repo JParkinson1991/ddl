@@ -47,8 +47,8 @@ fi
 cd "$nginxSrcModulesDir"
 git clone --recursive https://github.com/google/ngx_brotli.git
 cd ngx_brotli
-if [[ -n "$BROTLI_COMMIT" ]] && [[ "$BROTLI_COMMIT" != "master" ]]; then
-    git checkout -b $BROTLI_COMMIT $BROTLI_COMMIT
+if [[ -n "$NGINX_BROTLI_COMMIT" ]] && [[ "$NGINX_BROTLI_COMMIT" != "master" ]]; then
+    git checkout -b $NGINX_BROTLI_COMMIT $NGINX_BROTLI_COMMIT
     if [[ $? -ne 0 ]]; then
         echo "Failed to checkout brotli at request commit. Aborting install."
         exit $?
