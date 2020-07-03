@@ -12,6 +12,7 @@ Usage:
 
 Available Commands:
     build ................................... Builds the environment's Docker images
+    php:num-files ........................... Shows the current number of PHP files in the project
     version ................................. Show the package version
 
 Global options:

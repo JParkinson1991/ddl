@@ -1,0 +1,17 @@
+Command:
+    ddl php:num-files
+
+Description:
+    Shows the current number of PHP files in the project. Useful when configuring Opcache for example.
+
+Usage:
+    ddl php:num-files [search root]
+
+Arguments:
+    [search root]
+        The path to find all PHP files within.
+        If not provided this path is determined automatically and resolved from,
+        in the following order:
+            - An auto determined project root directory by the ddl binary
+            - The current working directory if the command was not run via
+              the ddl binary

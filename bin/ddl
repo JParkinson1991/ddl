@@ -73,6 +73,12 @@ if [[ "$*" == "--version" ]] || [[ "$*" == "-v" ]]; then
     exit 0
 fi
 
-# Standard command determined, run it
+# Standard command determined, load environment, exit if failed
+load_env
+if [[ $? -ne 0 ]]; then
+    exit $?
+fi
+
+# Run the command, exit with inherited code
 run_command "$@"
 exit $?

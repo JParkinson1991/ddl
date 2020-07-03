@@ -1,0 +1,22 @@
+diff --git a/index.php b/index.php
+index 750dc282..fc3a133e 100644
+--- a/index.php
++++ b/index.php
+@@ -1,5 +1,4 @@
+ <?php
+-
+ /**
+  * @file
+  * The PHP page that serves all page requests on a Drupal installation.
+@@ -11,9 +10,9 @@
+ use Drupal\Core\DrupalKernel;
+ use Symfony\Component\HttpFoundation\Request;
+
+-$autoloader = require_once 'autoload.php';
++$autoloader = require __DIR__.'/autoload.php';
+
+-$kernel = new DrupalKernel('prod', $autoloader);
++$kernel = new DrupalKernel(getenv('APP_ENV'), $autoloader);
+
+ $request = Request::createFromGlobals();
+ $response = $kernel->handle($request);

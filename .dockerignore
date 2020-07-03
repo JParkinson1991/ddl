@@ -4,9 +4,29 @@
 # - Place project specific ignore statements in this section.
 # ==============================================================================
 
+.editorconfig
 .env
-.env.example
+.gitattributes
 .gitignore
+docker-compose.yml
+LICENSE
+README.md
+
+/app/core/
+/app/autoload.php
+/app/index.php
+/app/update.php
+
+/bin/
+
+/docs/
+
+/public/
+
+/system/cli/
+
+/var/
+!/var/cache/composer
 
 /vendor/
 

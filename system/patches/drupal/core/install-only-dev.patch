@@ -1,0 +1,16 @@
+diff --git a/install.php b/install.php
+index 8fae042e..90fa9e80 100644
+--- a/install.php
++++ b/install.php
+@@ -7,6 +7,11 @@
+ 
+ use Drupal\Component\Utility\OpCodeCache;
+ 
++if (getenv('APP_ENV') !== "dev") {
++  http_response_code(403);
++  die('Forbidden');
++}
++
+ // Change the directory to the Drupal root.
+ chdir('..');
+ // Store the Drupal root path.

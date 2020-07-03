@@ -1,0 +1,36 @@
+# ==============================================================================
+# Example docker-compose.overrides.yml file
+#
+# To use this file place it at the project along side docker-compose.yml
+# renaming it to docker-compose.overrides.yml
+#
+# This example shows all possible environment variable and build argument
+# overrides as if they were loaded from an .env file. Please see the example.env
+# file for details on what each setting/value does.
+#
+# ==============================================================================
+
+version: "3"
+
+services:
+    nginx:
+        build:
+            args:
+                # Set the nginx versions and brotli commit values from the .env file
+                - NGINX_BROTLI_COMMIT=${NGINX_BROTLI_COMMIT}
+                - NGINX_VERSION=${NGINX_VERSION}
+
+
+    php:
+        environment:
+            # Set the application environment in use from the .env file
+            - APP_ENV=${APP_ENV}
+            # Set opcache settings from the .env file
+            - PHP_OPCACHE_ENABLE=${PHP_OPCACHE_ENABLE}
+            - PHP_OPCACHE_REVALIDATE_FREQ=${PHP_OPCACHE_REVALIDATE_FREQ}
+            - PHP_OPCACHE_VALIDATE_TIMESTAMPS=${PHP_OPCACHE_VALIDATE_TIMESTAMPS}
+            - PHP_OPCACHE_MAX_ACCELERATED_FILES=${PHP_OPCACHE_MAX_ACCELERATED_FILES}
+            - PHP_OPCACHE_MEMEORY_CONSUMPTION=${PHP_OPCACHE_MEMEORY_CONSUMPTION}
+            - PHP_OPCACHE_MAX_WASTED_PERCENTAGE=${PHP_OPCACHE_MAX_WASTED_PERCENTAGE}
+            - PHP_OPCACHE_INTERNED_STRINGS_BUFFER=${PHP_OPCACHE_INTERNED_STRINGS_BUFFER}
+            - PHP_OPCACHE_FAST_SHUTDOWN=${PHP_OPCACHE_FAST_SHUTDOWN}

@@ -1,7 +1,7 @@
 FROM ddl-compiler:latest as compiler
 FROM alpine:3.12
 
-ARG BROTLI_COMMIT="master"
+ARG NGINX_BROTLI_COMMIT="master"
 ARG NGINX_VERSION=1.18.0
 
 # Copy alpine initialiser
@@ -21,8 +21,18 @@ RUN chmod +x alpine_init.sh && /bin/sh alpine_init.sh && rm alpine_init.sh
 RUN chmod +x nginx_install.sh && /bin/bash nginx_install.sh && rm nginx_install.sh
 
 # App app directory to web root
-# todo php entry points, remove all but
-COPY --from=compiler /compiled/app /var/www
+COPY --from=compiler /compiled/app /var/www/app
+COPY --from=compiler /compiled/public /var/www/public
+
+# Todo: monitor this, ensure no breaking through usage
+# Todo: Look to move this into script that can be copied in pulling .env vars
+RUN find /var/www/app/ -type f \( \
+        -iname \*.php \
+        -o -iname \*.module \
+        -o -iname \*.inc \
+        -o -iname \*.yml \
+        -o -iname \*.yaml \
+    \) -exec rm -rf {} \;
 
 EXPOSE 80
 

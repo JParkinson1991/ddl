@@ -6,6 +6,17 @@
 
 .env
 
+/app/core/
+/app/autoload.php
+/app/index.php
+/app/update.php
+
+/public/**
+!/public/.gitkeep
+
+/var/**
+!/var/.gitkeep
+
 /vendor/
 
 # ==============================================================================
